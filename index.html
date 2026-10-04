@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Fruit Market Match 3</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap">
+    <style>
+        :root {
+            --wood-dark: #5A3310;
+            --cream: #FFF4DC;
+            --sun: #FFD36E;
+            --sunset: #FF9F5A;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 16px;
+            font-family: 'Jua', sans-serif;
+            color: var(--wood-dark);
+            background: linear-gradient(180deg, var(--sun), var(--sunset));
+        }
+        h1 { font-size: 32px; text-align: center; }
+        p { font-size: 16px; }
+        .fruits { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+        .fruits img { width: 44px; height: 44px; cursor: pointer; animation: bob 1.6s ease-in-out infinite; }
+        .fruits img:nth-child(2n) { animation-delay: -0.8s; }
+        @keyframes bob { 50% { transform: translateY(-6px); } }
+        @media (prefers-reduced-motion: reduce) { .fruits img { animation: none; } }
+    </style>
+</head>
+<body>
+    <h1>Fruit Market Match 3</h1>
+    <div class="fruits" id="fruits"></div>
+    <p>새 게임을 준비하고 있어요</p>
+    <script src="audio.js"></script>
+    <script>
+        // A placeholder that proves the deploy works: tap a fruit to change its face.
+        const fruits = ['apple', 'banana', 'grape', 'kiwi', 'orange', 'strawberry', 'cherry'];
+        const row = document.getElementById('fruits');
+        fruits.forEach(fruit => {
+            const img = document.createElement('img');
+            img.src = `img/fruits/fruit_${fruit}_001.png`;
+            img.alt = fruit;
+            let face = 1;
+            img.addEventListener('pointerdown', () => {
+                GameAudio.init();
+                GameAudio.playPop();
+                face = face % 4 + 1;
+                img.src = `img/fruits/fruit_${fruit}_00${face}.png`;
+            });
+            row.appendChild(img);
+        });
+    </script>
+</body>
+</html>
